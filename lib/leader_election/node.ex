@@ -53,7 +53,6 @@ defmodule LeaderElection.Node do
       become_king(name, candidates, t)
     else
       Enum.each(elder_candidates, fn {_, p} -> send(p, {:alive?, self()}) end)
-      if name == :c2, do: IO.puts("!!!")
       receive do
         { :imtheking, new_king } -> candidate(name, t, 0, new_king)
         { :finethanks, _ } -> almost_king(name, t)
